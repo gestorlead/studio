@@ -1,0 +1,465 @@
+<context>
+# Overview  
+GestorLead Studio é uma plataforma SaaS completa de automação de marketing digital que integra múltiplos provedores de IA para criação de conteúdo, gerenciamento de campanhas e análise de performance. A plataforma resolve o problema da fragmentação de ferramentas de marketing, oferecendo uma solução unificada que permite a pequenas e médias empresas competir com grandes corporações através de automação inteligente e criação de conteúdo de alta qualidade.
+
+O produto é direcionado para agências de marketing digital, profissionais de marketing, criadores de conteúdo e pequenas empresas que precisam escalar suas operações de marketing sem aumentar proporcionalmente os custos. O valor principal está na democratização do acesso a tecnologias de IA avançadas através de uma interface intuitiva e um modelo de precificação por créditos.
+
+# Core Features  
+
+## 1. Playground Multi-Modal de IA
+- **O que faz**: Interface unificada para gerar texto, imagens, áudio e vídeo usando diferentes provedores de IA (OpenAI, Google Gemini, PiAPI, ElevenLabs)
+- **Por que é importante**: Elimina a necessidade de alternar entre múltiplas plataformas e APIs, economizando tempo e reduzindo complexidade
+- **Como funciona**: Interface drag-and-drop com templates pré-configurados, histórico de gerações, e sistema de favoritos
+
+## 2. Sistema de Créditos Unificado
+- **O que faz**: Monetização transparente através de um sistema de créditos que converte automaticamente custos de diferentes APIs em uma moeda unificada
+- **Por que é importante**: Permite controle preciso de gastos e oferece previsibilidade de custos tanto para a plataforma quanto para os usuários
+- **Como funciona**: Conversão automática baseada em tabelas de custos dinâmicas, recargas automáticas, e relatórios detalhados de consumo
+
+## 3. Sistema de Agentes IA Customizados
+- **O que faz**: Permite criar, configurar e executar agentes autônomos que realizam sequências complexas de tarefas de marketing usando múltiplas ferramentas de IA
+- **Por que é importante**: Automatiza workflows completos de marketing, desde pesquisa de mercado até criação e publicação de conteúdo, multiplicando a produtividade
+- **Como funciona**: Editor visual de workflows, biblioteca de ações pré-construídas, triggers automáticos baseados em eventos, e execução em background com relatórios de progresso
+
+## 4. Gerenciamento de Campanhas Inteligente
+- **O que faz**: Criação, execução e otimização automatizada de campanhas de marketing across múltiplos canais
+- **Por que é importante**: Reduz trabalho manual repetitivo e melhora performance através de otimização baseada em dados
+- **Como funciona**: Templates de campanha, A/B testing automático, integração com redes sociais, e dashboards de performance em tempo real
+
+## 5. Analytics e Relatórios Avançados
+- **O que faz**: Coleta, processa e apresenta métricas de performance de todas as atividades de marketing em dashboards interativos
+- **Por que é importante**: Permite tomada de decisão baseada em dados e demonstra ROI das atividades de marketing
+- **Como funciona**: Integração com Google Analytics, Facebook Insights, APIs de redes sociais, e geração automática de relatórios personalizáveis
+
+# User Experience  
+
+## User Personas
+
+### Persona 1: Maria - Proprietária de Agência Digital
+- **Perfil**: 35 anos, proprietária de agência com 10 funcionários, atende 20+ clientes
+- **Pain Points**: Custos altos de ferramentas, dificuldade de escalar operações, clientes exigindo mais resultados
+- **Goals**: Reduzir custos operacionais, aumentar qualidade do trabalho, atender mais clientes sem contratar mais pessoas
+
+### Persona 2: João - Freelancer de Marketing
+- **Perfil**: 28 anos, trabalha remotamente para múltiplos clientes, especialista em social media
+- **Pain Points**: Tempo limitado, precisa competir com agências maiores, custos de ferramentas premium
+- **Goals**: Aumentar produtividade, oferecer serviços premium, escalar negócio
+
+### Persona 3: Ana - CMO de Startup
+- **Perfil**: 32 anos, lidera marketing em startup B2B, orçamento limitado
+- **Pain Points**: Equipe pequena, precisa provar ROI constantemente, recursos limitados
+- **Goals**: Maximizar impacto com recursos limitados, automatizar processos repetitivos
+
+## Key User Flows
+
+### Fluxo 1: Onboarding e Primeira Geração
+1. Cadastro via Google OAuth
+2. Tutorial interativo de 5 minutos
+3. Créditos gratuitos de boas-vindas
+4. Primeira geração guiada (template pré-selecionado)
+5. Explicação do sistema de créditos
+
+### Fluxo 2: Criação de Agente Personalizado
+1. Acesso ao Agent Builder
+2. Seleção de template ou criação do zero
+3. Configuração de triggers e ações
+4. Teste em ambiente sandbox
+5. Ativação e monitoramento
+
+### Fluxo 3: Execução de Campanha Completa
+1. Criação de nova campanha
+2. Definição de objetivos e KPIs
+3. Seleção de canais e audiências
+4. Geração automática de conteúdo
+5. Agendamento e publicação
+6. Monitoramento e otimização
+
+## UI/UX Considerations
+- **Design System**: Interface moderna baseada em Radix UI com tema escuro/claro
+- **Responsividade**: Mobile-first approach com PWA capabilities
+- **Acessibilidade**: Conformidade WCAG 2.1 AA
+- **Performance**: Loading states, skeleton screens, lazy loading
+- **Feedback**: Toast notifications, progress indicators, confirmações visuais
+</context>
+<PRD>
+# Technical Architecture  
+
+## System Components
+
+### Backend Architecture (Python/FastAPI)
+- **API Gateway**: FastAPI com autenticação JWT e rate limiting
+- **Database Layer**: PostgreSQL para dados relacionais + Redis para cache e sessões
+- **Message Queue**: Celery com Redis broker para processamento assíncrono
+- **File Storage**: MinIO (S3-compatible) para armazenamento de arquivos gerados
+- **Monitoring**: Prometheus + Grafana para métricas e alertas
+
+### Frontend Architecture (Next.js/React)
+- **Framework**: Next.js 14 com App Router e Server Components
+- **State Management**: Zustand para estado global + React Query para server state
+- **UI Components**: Radix UI + Tailwind CSS para design system
+- **Authentication**: NextAuth.js com Google OAuth
+- **File Upload**: React Dropzone com preview e validação
+
+### AI Integration Layer
+- **Provider Abstraction**: Interface unificada para OpenAI, Google, PiAPI, ElevenLabs
+- **Cost Management**: Sistema de conversão de custos em créditos
+- **Caching Strategy**: Cache inteligente para reduzir custos de API
+- **Error Handling**: Failover automático entre provedores
+
+### Agent Execution Engine
+- **Workflow Engine**: Sistema baseado em DAG (Directed Acyclic Graph)
+- **Action Library**: Biblioteca extensível de ações pré-construídas
+- **Trigger System**: Webhooks, scheduled jobs, e event-driven triggers
+- **Execution Monitoring**: Logs detalhados e métricas de performance
+
+## Data Models
+
+### Core Entities
+```sql
+users: id, email, google_id, credit_balance, subscription_tier
+tasks: id, user_id, type, provider, status, cost, payload, result
+agents: id, user_id, name, config, triggers, actions, status
+campaigns: id, user_id, name, channels, objectives, status, metrics
+generated_content: id, task_id, type, url, metadata, tags
+api_keys: id, user_id, provider, encrypted_key, permissions
+```
+
+### Relationships
+- User 1:N Tasks, Agents, Campaigns
+- Agent 1:N AgentExecutions
+- Campaign 1:N Tasks (for content generation)
+- Task 1:1 GeneratedContent
+
+## APIs and Integrations
+
+### External APIs
+- **OpenAI**: GPT-4, DALL-E 3, Whisper
+- **Google**: Gemini Pro, Imagen 2
+- **PiAPI**: Stable Diffusion, ControlNet
+- **ElevenLabs**: Voice synthesis e cloning
+- **Social Media**: Facebook Graph API, Twitter API v2, LinkedIn API
+- **Analytics**: Google Analytics 4, Facebook Insights
+
+### Internal API Structure
+```
+/api/v1/
+  /auth - Autenticação e autorização
+  /users - Gestão de usuários e perfis
+  /credits - Sistema de créditos e billing
+  /tasks - Gerenciamento de tarefas IA
+  /agents - CRUD e execução de agentes
+  /campaigns - Gestão de campanhas
+  /content - Upload e gestão de conteúdo
+  /analytics - Métricas e relatórios
+```
+
+## Infrastructure Requirements
+
+### Production Environment
+- **Compute**: 2x API instances (4 CPU, 8GB RAM), 2x Worker instances (2 CPU, 4GB RAM)
+- **Database**: PostgreSQL 15 (2 CPU, 4GB RAM, 100GB SSD)
+- **Cache**: Redis cluster (1GB RAM)
+- **Storage**: MinIO cluster (500GB inicial)
+- **Load Balancer**: Nginx com SSL termination
+- **Monitoring**: Prometheus + Grafana stack
+
+### Development Environment
+- **Docker Compose**: Stack completa local
+- **Hot Reload**: Frontend e backend com live reloading
+- **Test Database**: PostgreSQL em container
+- **Mock Services**: Simuladores para APIs externas
+
+# Development Roadmap  
+
+## Phase 1: Foundation MVP (Core Platform)
+**Scope**: Base sólida com funcionalidades essenciais para validação de mercado
+
+### Backend Core
+- FastAPI application setup com estrutura modular
+- Modelos de dados PostgreSQL com migrations Alembic
+- Sistema de autenticação JWT + Google OAuth
+- Sistema básico de créditos com tabela de conversão
+- API abstraction layer para provedores IA
+- Rate limiting e middleware de segurança
+
+### Frontend Core  
+- Next.js 14 setup com TypeScript e Tailwind
+- Sistema de autenticação com NextAuth
+- Dashboard principal com navegação
+- Componentes base do design system
+- Sistema de loading states e error handling
+
+### AI Integration MVP
+- Integração OpenAI (text completion + image generation)
+- Interface de playground básica
+- Sistema de tasks assíncronas com Celery
+- Upload e gestão básica de arquivos
+
+### Deployment Infrastructure
+- Docker containerization completa
+- GitHub Actions CI/CD pipeline
+- Ambiente de staging e produção
+- Monitoring básico com logs estruturados
+
+## Phase 2: Multi-Modal AI Expansion
+**Scope**: Expansão para múltiplos provedores e tipos de conteúdo
+
+### Enhanced AI Capabilities
+- Integração Google Gemini Pro
+- Integração PiAPI para Stable Diffusion
+- Integração ElevenLabs para síntese de voz
+- Sistema de templates pré-configurados
+- Histórico e favoritos de gerações
+
+### Advanced UI Features
+- Playground multi-modal interface
+- Drag-and-drop file handling
+- Real-time preview e editing
+- Batch processing interface
+- Advanced filtering e search
+
+### Performance Optimizations
+- Cache Redis para resultados frequentes
+- CDN setup para arquivos estáticos
+- Database indexing optimization
+- Background job monitoring dashboard
+
+## Phase 3: Agent System (Automação Inteligente)
+**Scope**: Sistema completo de agentes IA customizados
+
+### Agent Builder Interface
+- Visual workflow editor (node-based)
+- Library de ações pré-construídas
+- Sistema de triggers configurable
+- Template marketplace de agentes
+- Sandbox environment para testes
+
+### Agent Execution Engine
+- DAG-based workflow processor
+- Parallel execution support
+- Error handling e retry logic
+- Real-time progress tracking
+- Detailed execution logs
+
+### Advanced Integrations
+- Social media APIs (Facebook, Instagram, LinkedIn, Twitter)
+- Email marketing integration (SendGrid, Mailchimp)
+- CRM integration (HubSpot, Salesforce)
+- Analytics e reporting automático
+
+## Phase 4: Enterprise Features
+**Scope**: Recursos avançados para escala e enterprise
+
+### Advanced Analytics
+- Custom dashboard builder
+- Advanced reporting engine
+- ROI calculation automático
+- A/B testing framework
+- Predictive analytics
+
+### Team Collaboration
+- Multi-user workspaces
+- Role-based permissions
+- Asset sharing e versioning
+- Team activity feeds
+- Approval workflows
+
+### Enterprise Integrations
+- SSO (SAML, Active Directory)
+- API white-labeling
+- Custom domain support
+- Advanced security features
+- Compliance tools (GDPR, CCPA)
+
+# Logical Dependency Chain
+
+## Foundation Layer (Phase 1 - Ordem Crítica)
+1. **Database Schema & Models** - Base de tudo, deve ser bem planejado
+2. **Authentication System** - Necessário antes de qualquer feature user-facing
+3. **Credit System** - Core business logic que afeta todos os recursos pagos
+4. **FastAPI Core + Basic Endpoints** - Infraestrutura para frontend se conectar
+5. **Next.js Setup + Authentication UI** - Frontend mínimo para interação
+6. **Single AI Provider Integration (OpenAI)** - Prova de conceito funcional
+7. **Basic Task Queue System** - Necessário para operações assíncronas
+8. **Simple Playground Interface** - Primeira funcionalidade visível e usável
+
+## Expansion Layer (Phase 2 - Build Upon Foundation)
+1. **AI Provider Abstraction Layer** - Deve vir antes de adicionar novos provedores
+2. **Multi-Provider Integration** - Google, PiAPI, ElevenLabs sequencialmente
+3. **Enhanced UI Components** - Parallel com integrações, não blocante
+4. **File Management System** - Necessário antes de features avançadas
+5. **Template System** - Pode ser desenvolvido em paralelo
+6. **Performance Optimizations** - Cache, CDN, otimizações BD
+
+## Automation Layer (Phase 3 - Advanced Features)
+1. **Workflow Engine Core** - Base para todo sistema de agentes
+2. **Action Library Foundation** - Ações básicas antes de interface
+3. **Visual Workflow Editor** - Interface para criar agentes
+4. **Agent Execution Runtime** - Motor que executa os workflows
+5. **External API Integrations** - Social media, analytics etc
+6. **Agent Marketplace** - Templates e sharing de agentes
+
+## Enterprise Layer (Phase 4 - Scale & Polish)
+1. **Advanced Analytics Engine** - Independente, pode ser paralelo
+2. **Team & Permission System** - Requires user system refactoring
+3. **Enterprise Integrations** - SSO, compliance, security
+4. **White-label Features** - Último, nice-to-have
+
+## Getting to Usable Frontend Quickly
+**Target**: Interface funcional em 4-6 semanas
+
+### Week 1-2: Basic Infrastructure
+- Authentication working end-to-end
+- Simple dashboard com credit display
+- Basic API connectivity
+
+### Week 3-4: Core Playground  
+- Text generation interface (OpenAI)
+- Basic image generation
+- Task status tracking
+- File download/preview
+
+### Week 5-6: Polish & UX
+- Loading states e error handling
+- Responsive design
+- Basic onboarding flow
+- Credit purchase flow
+
+## Atomic Feature Scoping Strategy
+
+### Atomic Units (Can be built independently)
+- **Single AI Provider Integration** (1-2 weeks each)
+- **Individual UI Components** (3-5 days each)  
+- **Specific API Endpoints** (2-3 days each)
+- **Individual Agent Actions** (1-2 days each)
+- **Specific Analytics Views** (3-5 days each)
+
+### Build-Upon Strategy
+- Start with simplest version of each feature
+- Add complexity in subsequent iterations
+- Maintain backwards compatibility
+- Focus on horizontal scaling before vertical features
+
+# Risks and Mitigations  
+
+## Technical Challenges
+
+### Risk: AI Provider API Instability/Rate Limits
+- **Impact**: Alto - Pode interromper serviço principal
+- **Probability**: Médio - APIs externas são naturalmente instáveis
+- **Mitigation**: 
+  - Implementar circuit breaker pattern
+  - Multiple provider fallback
+  - Aggressive caching strategy
+  - Queue system com retry exponencial
+
+### Risk: High Operational Costs (AI APIs)
+- **Impact**: Alto - Pode inviabilizar modelo de negócio
+- **Probability**: Alto - Custos de IA são notoriamente altos
+- **Mitigation**:
+  - Sophisticated caching strategy
+  - User spending limits e alertas
+  - Dynamic pricing baseado em custos reais
+  - Bulk purchasing agreements com provedores
+
+### Risk: Complex Agent System Performance
+- **Impact**: Médio - Pode afetar user experience
+- **Probability**: Médio - Sistemas complexos têm overhead
+- **Mitigation**:
+  - Modular execution engine
+  - Resource limiting por usuário
+  - Monitoring detalhado de performance
+  - Graceful degradation strategies
+
+## MVP Definition & Building Strategy
+
+### MVP Success Criteria
+1. **User pode se registrar e autenticar** via Google OAuth
+2. **User pode gerar texto e imagem** usando créditos
+3. **User pode comprar créditos** via payment gateway
+4. **User pode ver histórico** de gerações e saldo
+5. **System é observável** com logs e métricas básicas
+
+### MVP Building Approach
+- **Time-box strict**: 12 semanas máximo para MVP
+- **Feature freeze**: Sem features adicionais durante development
+- **Quality gates**: Automated testing em cada PR
+- **User feedback loop**: Weekly user interviews com beta testers
+- **Performance budgets**: Response time < 2s, uptime > 99%
+
+### Post-MVP Iteration Strategy
+- **Data-driven decisions**: Analytics em toda user action
+- **A/B testing framework**: Para todas as UI changes
+- **User feedback integration**: Feature request voting system
+- **Gradual rollout**: Feature flags para rollout controlado
+
+## Resource Constraints
+
+### Risk: Small Development Team
+- **Impact**: Alto - Pode atrasar delivery significativamente
+- **Probability**: Alto - Startup budget constraints
+- **Mitigation**:
+  - Priorização rigorosa de features
+  - Heavy use de open source tools
+  - Outsourcing de tarefas não-core
+  - Documentation completa para onboarding rápido
+
+### Risk: Infrastructure Scaling Costs
+- **Impact**: Médio - Pode limitar crescimento
+- **Probability**: Médio - Success brings scaling challenges
+- **Mitigation**:
+  - Cloud-native architecture
+  - Auto-scaling configurations
+  - Cost monitoring e alertas
+  - Resource optimization contínua
+
+### Risk: Security e Compliance
+- **Impact**: Alto - Pode resultar em breach ou legal issues
+- **Probability**: Baixo - Com proper implementation
+- **Mitigation**:
+  - Security by design approach
+  - Regular security audits
+  - Compliance checklist (GDPR, CCPA)
+  - Third-party security tools
+
+# Appendix  
+
+## Research Findings
+
+### Market Analysis
+- **TAM**: $47B global marketing automation market (2024)
+- **Competition**: HubSpot, Mailchimp, Hootsuite dominam, mas focam em specific verticals
+- **Differentiation**: Multi-AI integration é relativamente novo no market
+- **Pricing Research**: Users pagam $50-500/mês por ferramentas similares
+
+### Technical Research
+- **AI Costs**: OpenAI GPT-4: $0.03/1K tokens input, Google Gemini: $0.007/1K tokens
+- **Performance Benchmarks**: FastAPI handles 1000+ req/sec, Next.js SSR < 100ms
+- **Scalability**: PostgreSQL + Redis pode escalar até 10M+ users com proper sharding
+
+## Technical Specifications
+
+### Security Requirements
+- **Authentication**: OAuth 2.0 + JWT tokens
+- **Data Encryption**: AES-256 for sensitive data at rest
+- **API Security**: Rate limiting, CORS, input validation
+- **Infrastructure**: SSL/TLS, VPN access, encrypted backups
+
+### Performance Requirements  
+- **Response Time**: < 2s for 95th percentile
+- **Throughput**: Support 1000+ concurrent users
+- **Availability**: 99.9% uptime SLA
+- **Scalability**: Horizontal scaling para todos os componentes
+
+### Compliance Requirements
+- **GDPR**: Data portability, right to deletion, privacy by design
+- **CCPA**: California privacy rights implementation  
+- **SOC 2**: Security e availability controls
+- **PCI DSS**: Para payment processing (via Stripe/similar)
+
+### Integration Specifications
+- **REST APIs**: OpenAPI 3.0 specification
+- **Webhooks**: Event-driven integrations
+- **SDKs**: JavaScript e Python client libraries
+- **Rate Limits**: Tiered based on subscription level
+</PRD>
