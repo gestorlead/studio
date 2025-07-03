@@ -16,3 +16,6 @@ class CRUDTask(CRUDBase[Task, TaskCreate, TaskUpdate]):
         return db.query(Task).filter(Task.campaign_id == campaign_id).all()
 
 crud_task = CRUDTask(Task) 
+# Instâncias globais do CRUD  
+crud_task = CRUDTask(Task)
+task_crud = crud_task

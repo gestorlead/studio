@@ -8,3 +8,6 @@ class CRUDAPIKey(CRUDBase[APIKey, APIKeyCreate, dict]):
     pass
 
 crud_api_key = CRUDAPIKey(APIKey) 
+# Instâncias globais do CRUD
+crud_api_key = CRUDApiKey(ApiKey)
+api_key_crud = crud_api_key

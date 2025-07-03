@@ -5,10 +5,14 @@ Task: 1.8 - Integrate ORM Models with FastAPI
 
 from fastapi import APIRouter
 
-from app.api.v1.endpoints import users, tasks, agents, campaigns, generated_content, api_keys
+from app.api.v1.endpoints import users, tasks, agents, campaigns, generated_content, api_keys, auth
 
 api_router = APIRouter()
 
+# Authentication routes (no auth required)
+api_router.include_router(auth.router, prefix="/auth", tags=["authentication"])
+
+# Protected routes
 api_router.include_router(users.router, prefix="/users", tags=["users"])
 api_router.include_router(tasks.router, prefix="/tasks", tags=["tasks"])
 api_router.include_router(agents.router, prefix="/agents", tags=["agents"])

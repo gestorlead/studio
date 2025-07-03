@@ -8,3 +8,6 @@ class CRUDCampaign(CRUDBase[Campaign, CampaignCreate, CampaignUpdate]):
     pass
 
 crud_campaign = CRUDCampaign(Campaign) 
+# Instâncias globais do CRUD
+crud_campaign = CRUDCampaign(Campaign)
+campaign_crud = crud_campaign

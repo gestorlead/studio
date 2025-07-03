@@ -13,3 +13,6 @@ class CRUDAgent(CRUDBase[Agent, AgentCreate, AgentUpdate]):
         return db.query(Agent).filter(Agent.category_id == category_id).all()
 
 crud_agent = CRUDAgent(Agent) 
+# Instâncias globais do CRUD
+crud_agent = CRUDAgent(Agent)  
+agent_crud = crud_agent
